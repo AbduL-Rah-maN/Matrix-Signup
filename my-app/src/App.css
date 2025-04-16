@@ -41,25 +41,13 @@
 .pill-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 22rem;
   width: 100%;
   height: 40%;
   position: relative;
-}
-
-.pill-column {
   display: flex;
+  justify-content: center;
   align-items: center;
-  height: 100%;
-}
-
-.left-column {
-  justify-content: center;
-  padding-left: 6rem;
-}
-
-.right-column {
-  justify-content: center;
-  padding-right: 6rem;
 }
 
 .matrix-pill {
@@ -76,6 +64,7 @@
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  
 }
 
 .matrix-pill span {
@@ -100,6 +89,7 @@
 .matrix-pill:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  color: white;
 }
 
 .matrix-pill:active {
@@ -209,94 +199,8 @@
   text-decoration: none;
 }
 
-
-
-
-.matrix-login-container {
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid #00FF41;
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+.Login-page{
+    width: 99vw;
+    
 }
 
-.matrix-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.matrix-input-group {
-  margin-bottom: 1.5rem;
-}
-
-.matrix-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #00FF41;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.matrix-input {
-  width: 100%;
-  padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #00FF41;
-  color: white;
-  font-family: 'Courier New', monospace;
-}
-
-.matrix-input:focus {
-  outline: none;
-  border-color: #10B981;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
-}
-
-.matrix-password-toggle {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #00FF41;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.matrix-checkbox {
-  display: flex;
-  align-items: center;
-  color: #00FF41;
-  cursor: pointer;
-}
-
-.matrix-link {
-  color: #3498DB;
-  text-decoration: none;
-}
-
-.matrix-link:hover {
-  text-decoration: underline;
-}
-
-.matrix-error {
-  color: #E74C3C;
-  background: rgba(231, 76, 60, 0.1);
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-left: 3px solid #E74C3C;
-}
-
-.matrix-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #3498DB;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}

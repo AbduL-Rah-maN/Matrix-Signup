@@ -1,150 +1,129 @@
-import { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import { useState } from 'react';
 
 
-function LoginPage() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    remember: false
-  });
+const LoginSchema = Yup.object().shape({
+  emailId: Yup.string()
+    .email('Invalid Email ID format')
+    .required('Email ID required'),
+  password: Yup.string()
+    .min(8, 'Key must be 8+ characters')
+    .required('Password required')
+});
+
+export default function MatrixLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    try {
-      // Replace with actual authentication logic
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Login data:', formData);
-      navigate('/dashboard'); // Redirect on success
-    } catch (err) {
-      setError('Invalid credentials. The system rejects you.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <div className="matrix-login-container">
-      {/* Header */}
-      <div className="matrix-header">
-        <h1 className="text-green-400 text-4xl font-bold mb-2 tracking-widest">
-          SYSTEM LOGIN
-        </h1>
-        <p className="text-gray-400">Enter your credentials to access the construct</p>
-      </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="matrix-error">
-          {error}
-        </div>
-      )}
-
-      {/* Login Form */}
-      <form onSubmit={handleSubmit} className="matrix-form">
-        {/* Email Field */}
-        <div className="matrix-input-group">
-          <label htmlFor="email" className="matrix-label">
-            USER ID
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="matrix-input"
-            placeholder="neo@zion.net"
-            required
-          />
+    <div className="Login-page min-h-screen w-full flex items-center justify-center bg-gray-900 px-4 py-8 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="Login-main-content w-full max-w-md sm:max-w-lg bg-gray-800/90 border-2 border-blue-500/50 rounded-xl shadow-lg shadow-blue-500/20 px-6 py-8 sm:px-10 sm:py-10">
+        
+        <div className="text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-blue-400 mb-2 tracking-wider">
+            SYSTEM ACCESS
+          </h1>
+          <p className="text-blue-300/80 text-sm sm:text-base">Verify your identity</p>
         </div>
 
-        {/* Password Field */}
-        <div className="matrix-input-group">
-          <label htmlFor="password" className="matrix-label">
-            ENCRYPTION KEY
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="matrix-input pr-10"
-              placeholder="••••••••"
-              minLength="8"
-              required
-            />
-            <button
-              type="button"
-              className="matrix-password-toggle"
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-            >
-              
-            </button>
-          </div>
-        </div>
-
-        {/* Remember Me & Forgot Password */}
-        <div className="flex justify-between items-center mb-6">
-          <label className="matrix-checkbox">
-            <input
-              type="checkbox"
-              name="remember"
-              checked={formData.remember}
-              onChange={handleChange}
-              className="mr-2"
-            />
-            Remember this terminal
-          </label>
-          <Link to="/forgot-password" className="matrix-link">
-            Encryption key lost?
-          </Link>
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="matrix-pill blue-pill flex items-center justify-center gap-2"
-          disabled={isLoading}
+        <Formik
+          initialValues={{ emailId: '', password: '', remember: false }}
+          validationSchema={LoginSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              console.log('Authenticating:', values);
+              navigate('/dashboard');
+              setSubmitting(false);
+            }, 1500);
+          }}
         >
-          {isLoading ? (
-            <span className="matrix-spinner"></span>
-          ) : (
-            <>
-              <span className="w-5 h-5 rounded-full bg-blue-500 border-2 border-blue-700"></span>
-              <span>ACCESS SYSTEM</span>
-            </>
-          )}
-        </button>
+          {({ isSubmitting, errors, touched }) => (
+            <Form className="space-y-6">
+              
+              
+              <div>
+                <label htmlFor="emailId" className="block text-sm font-medium text-blue-300 mb-1">
+                  EMAIL ID
+                </label>
+                <Field
+                  name="emailId"
+                  type="email"
+                  className={`w-full px-4 py-3 bg-gray-700/50 border ${
+                    errors.emailId && touched.emailId 
+                      ? 'border-red-500' 
+                      : 'border-blue-500/30'
+                  } rounded-lg text-white placeholder-blue-400/70 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent`}
+                  placeholder="smith@email.in"
+                />
+                {errors.emailId && touched.emailId && (
+                  <p className="mt-1 text-sm text-red-400">{errors.emailId}</p>
+                )}
+              </div>
 
-        {/* Sign Up Link */}
-        <div className="matrix-footer">
-          Not jacked in?{' '}
-          <Link to="/signup" className="matrix-link font-bold">
-            Take the red pill
-          </Link>
-        </div>
-      </form>
+              
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-blue-300 mb-1">
+                  PASSWORD
+                </label>
+                <div className="relative">
+                  <Field
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    className={`w-full px-4 py-3 bg-gray-700/50 border ${
+                      errors.password && touched.password
+                        ? 'border-red-500' 
+                        : 'border-blue-500/30'
+                    } rounded-lg text-blue-100 placeholder-blue-400/70 focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all`}
+                    placeholder="enter password"
+                  />
+                </div>
+                {errors.password && touched.password && (
+                  <p className="mt-1 text-sm text-red-400">{errors.password}</p>
+                )}
+              </div>
+
+              
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div className="flex items-center">
+                  <Field 
+                    type="checkbox" 
+                    name="remember" 
+                    id="remember"
+                    className="h-4 w-4 border border-blue-500/50 rounded bg-gray-700/50 focus:ring-blue-500/50 text-blue-500"
+                  />
+                  <label htmlFor="remember" className="ml-2 text-sm text-blue-300/80">
+                    Remember my details
+                  </label>
+                </div>
+                <Link to="/forgot" className="text-sm text-blue-400 hover:text-blue-300">
+                  Key recovery
+                </Link>
+              </div>
+
+              
+              <button
+                type="submit"
+                className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-md font-bold text-blue-50 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200"
+              >
+                <>
+                  <div className="w-3 h-3 text-bold rounded-full bg-blue-300 border border-blue-500"></div>
+                  Login
+                </>
+              </button>
+
+              
+              <div className="text-center text-sm text-blue-400/80">
+                <Link to="/signup" className="font-medium text-blue-300 hover:text-blue-200">
+                  [ NEW USER? ▸ ENTER HERE ]
+                </Link>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
+
   );
 }
-
-export default LoginPage

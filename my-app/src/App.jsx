@@ -19,19 +19,16 @@ function HomePage() {
           
           <div className="pill-grid">
 
-            <Link to="/SignUp" className="pill-column left-column">
-              <button className="matrix-pill red-pill">
-              <span className="inline-block w-5 h-5 rounded-full bg-red-700 border border-black"></span> SIGN UP
-              </button>
+            <Link to="/SignUp" className="matrix-pill red-pill">
+              <span className="inline-block w-5 h-5 rounded-full bg-red-700 border border-black mr-2"></span>
+              SIGN UP
             </Link>
-            
-            
 
-            <Link to="/Login" className="pill-column right-column">
-              <button className="matrix-pill blue-pill">
-              <span className="inline-block w-5 h-5 rounded-full bg-blue-600 border border-black"></span> LOG IN
-              </button>
+            <Link to="/Login" className="matrix-pill blue-pill">
+              <span className="inline-block w-5 h-5 rounded-full bg-blue-600 border border-black mr-2"></span>
+              LOG IN
             </Link>
+            
           </div>
         </div> 
       </div>
