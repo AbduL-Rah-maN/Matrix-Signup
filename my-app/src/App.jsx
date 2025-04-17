@@ -5,6 +5,9 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import SignUpPage from './SignUp'; 
 import LoginPage from './Login';
+import NotFound from './NotFound';
+import MatrixDashboard from './Dashboard';
+
 
 
 function HomePage() {
@@ -43,6 +46,8 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/Login" element= {<LoginPage />} />
+      <Route path="/Dashboard" element={<MatrixDashboard />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 

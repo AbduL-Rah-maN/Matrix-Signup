@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useState } from 'react';
 
 
+
 const LoginSchema = Yup.object().shape({
   emailId: Yup.string()
     .email('Invalid Email ID format')
@@ -108,7 +109,7 @@ export default function MatrixLogin() {
                 className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-md font-bold text-blue-50 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200"
               >
                 <>
-                  <div className="w-3 h-3 text-bold rounded-full bg-blue-300 border border-blue-500"></div>
+                  <Link to="/Dashboard" className="w-3 h-3 text-bold rounded-full bg-blue-300 border border-blue-500"></Link>
                   Login
                 </>
               </button>
