@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { useFormik } from 'formik'; 
-import * as Yup from 'yup'; 
+import * as Yup from 'yup';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./Firebase.js"; 
+import { useNavigate } from 'react-router-dom';
+
 
 function SignUpPage() {
   
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -20,11 +25,34 @@ function SignUpPage() {
         .min(8, 'Password must be at least 8 characters')
         .required('Enter your password'),
       confirmPassword: Yup.string()
-        .min(8, 'Password must be at least 8 characters')
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Confirm your password')
-    })
-    
+    }),
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+  
+        console.log("User created:", userCredential.user);
+        navigate("/login");
+        
+      } catch (error) {
+        console.error("Signup error:", error.message);
+  
+        if (error.code === "auth/email-already-in-use") {
+          setErrors({ email: "This email is already in use." });
+        } else {
+          setErrors({ password: "Signup failed. Try again." });
+        }
+      } finally {
+        setSubmitting(false);
+      }
+    }
   });
+  
 
   return (
     <div className="matrix-signup-page">

@@ -4,7 +4,7 @@ import React from 'react'
 function ExpLeft() {
   return (
     <div className='text-black pt-10 px-14  '>
-        <div className='font-bold text-4xl'>Expenses</div>
+        <div className='font-bold text-4xl'>Dashboard</div>
         <div className='text-gray-500 text-sm pt-5 pl-1 pb-7'> 01 - 25 March, 2025 </div>
         
         <div className='font-bold border-b pb-2 mb-5 text-gray-800'>

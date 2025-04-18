@@ -2,6 +2,8 @@ import { Formik, Form, Field } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./Firebase.js"; 
 
 
 
@@ -32,13 +34,30 @@ export default function MatrixLogin() {
         <Formik
           initialValues={{ emailId: '', password: '', remember: false }}
           validationSchema={LoginSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              console.log('Authenticating:', values);
-              navigate('/dashboard');
+          onSubmit={async (values, { setSubmitting, setErrors }) => {
+            try {
+              const userCredential = await signInWithEmailAndPassword(
+                auth,
+                values.emailId,
+                values.password
+              );
+              console.log("User logged in:", userCredential.user);
+              navigate("/dashboard");
+            } catch (error) {
+              console.error("Login error:", error.message);
+          
+              if (error.code === "auth/user-not-found") {
+                setErrors({ emailId: "Email not found" });
+              } else if (error.code === "auth/wrong-password") {
+                setErrors({ password: "Incorrect password" });
+              } else {
+                setErrors({ password: "Login failed. Try again." });
+              }
+            } finally {
               setSubmitting(false);
-            }, 1500);
+            }
           }}
+          
         >
           {({ isSubmitting, errors, touched }) => (
             <Form className="space-y-6">
@@ -109,7 +128,7 @@ export default function MatrixLogin() {
                 className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-md font-bold text-blue-50 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200"
               >
                 <>
-                  <Link to="/Dashboard" className="w-3 h-3 text-bold rounded-full bg-blue-300 border border-blue-500"></Link>
+                  <div className="w-3 h-3 rounded-full bg-blue-300 border border-blue-500"></div>
                   Login
                 </>
               </button>
