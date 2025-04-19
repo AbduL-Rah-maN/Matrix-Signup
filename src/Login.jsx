@@ -21,7 +21,7 @@ export default function MatrixLogin() {
   const navigate = useNavigate();
 
   return (
-    <div className="Login-page min-h-screen w-full flex items-center justify-center bg-gray-900 px-4 py-8 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="Login-page flex items-center justify-center bg-gray-900 px-4 py-8 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="Login-main-content w-full max-w-md sm:max-w-lg bg-gray-800/90 border-2 border-blue-500/50 rounded-xl shadow-lg shadow-blue-500/20 px-6 py-8 sm:px-10 sm:py-10">
         
         <div className="text-center mb-8">
