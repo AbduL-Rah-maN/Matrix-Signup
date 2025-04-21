@@ -209,21 +209,17 @@
 .bg-dashboard{
   background-color: #1e1e1e;
   background-size: cover;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 
 .dash-right{
-  margin-right: 20px;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
+  margin-right: 40px;
+  overflow-y: scroll;
+  width: 75vw;
+  
 }
 
-.left-exp{
-  margin-bottom: -30px;
-}
 
 .nav button{
   background-color: #1e1e1e;

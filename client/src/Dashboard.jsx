@@ -53,7 +53,7 @@ function Dashboard() {
 
 
   return (
-    <div className='bg-dashboard grid grid-cols-[3fr_9fr] h-full pb-10'>
+    <div className='bg-dashboard grid grid-cols-[3fr_9fr] h-full '>
       <div className='dash-left font-serif flex flex-col mt-10 items-center'>
         <div>
           <div className='flex justify-center'>
