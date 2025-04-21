@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getItems, addItem, updateItem, deleteItem } from "../api.js"; // your axios service
+import { getItems, addItem, updateItem, deleteItem } from "../api.js"; 
 
 export default function DashRight() {
   const [items, setItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
 
-  // Fetch on mount
+  
   useEffect(() => {
     loadItems();
   }, []);
@@ -110,7 +110,7 @@ function ItemModal({ item, onSave, onClose }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  // Update form fields when item prop changes
+  
   useEffect(() => {
     setName(item?.name || "");
     setDescription(item?.description || "");
@@ -119,7 +119,7 @@ function ItemModal({ item, onSave, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave({ 
-      id: item?.id || null,  // Safely handle undefined item
+      id: item?.id || null,  
       name, 
       description 
     });

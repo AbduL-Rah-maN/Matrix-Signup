@@ -13,49 +13,6 @@ import DashRight from './Dashboard/DashRight.jsx';
 
 function Dashboard() {
 
-
-  const [items, setItems] = useState([]);
-  const [text, setText] = useState('');
-  const [editingItem, setEditingItem] = useState(null);
-
-  // READ
-  useEffect(() => {
-    getItems().then(res => setItems(res.data));
-  }, []);
-
-  // CREATE or UPDATE
-  const handleSubmit = () => {
-    if (!text) return;
-  
-    if (editingItem) {
-      updateItem(editingItem.id, { name: text }).then(() => {
-        setItems(prev =>
-          prev.map(i => (i.id === editingItem.id ? { ...i, name: text } : i))
-        );
-        setEditingItem(null);
-        setText('');
-      });
-    } else {
-      addItem({ name: text }).then(res => {
-        setItems([...items, res.data]);
-        setText('');
-      });
-    }
-  };
-  
-
-  // DELETE
-  const handleDelete = id => {
-    deleteItem().then(() => {
-      setItems(items.filter(i => i.id !== id));
-    });
-  };
-
-  const handleEdit = item => {
-    setEditingItem(item);
-    setText(item.name);
-  };
-
   const [userData, setUserData] = useState({ displayName: "", email: "" });
   const [loading, setLoading] = useState(true);
 

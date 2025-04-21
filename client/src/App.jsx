@@ -13,7 +13,7 @@ import MatrixDashboard from './Dashboard';
 
 
 function HomePage() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
