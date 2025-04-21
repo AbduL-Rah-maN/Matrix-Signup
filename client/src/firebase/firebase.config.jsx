@@ -11,7 +11,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCRz0-gmjH-8u0L-p92UxrTwIYYYZ_lWgM",
   authDomain: "matrix-page.firebaseapp.com",
   projectId: "matrix-page",
-  storageBucket: "matrix-page.firebasestorage.app",
+  storageBucket: "matrix-page.appspot.com",
   messagingSenderId: "400142694339",
   appId: "1:400142694339:web:fd32d6fd562ee8a425af76"
 };

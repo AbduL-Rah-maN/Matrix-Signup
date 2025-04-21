@@ -1,33 +1,45 @@
-let items = [];
-let id = 1;
+import express from 'express';
+import Item from '../models/Item.js';
 
-const getItems = (req, res) => {
+const router = express.Router();
+
+// GET all items
+router.get('/', async (req, res) => {
+  const items = await Item.find();
   res.json(items);
-};
+});
 
-const addItem = (req, res) => {
-  const newItem = { id: id++, ...req.body };
-  items.push(newItem);
-  res.status(201).json(newItem);
-};
+// POST a new item
+router.post('/', async (req, res) => {
+  try {
+    const item = new Item(req.body);
+    const savedItem = await item.save();
+    res.status(201).json(savedItem);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-const updateItem = (req, res) => {
-  const itemId = parseInt(req.params.id);
-  items = items.map(item =>
-    item.id === itemId ? { ...item, ...req.body } : item
-  );
-  res.json({ message: 'Item updated' });
-};
+// PUT (update) item
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    });
+    res.json(updatedItem);
+  } catch (err) {
+    res.status(404).json({ error: 'Item not found' });
+  }
+});
 
-const deleteItem = (req, res) => {
-  const itemId = parseInt(req.params.id);
-  items = items.filter(item => item.id !== itemId);
-  res.json({ message: 'Item deleted' });
-};
+// DELETE item
+router.delete('/:id', async (req, res) => {
+  try {
+    await Item.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Item deleted' });
+  } catch (err) {
+    res.status(404).json({ error: 'Item not found' });
+  }
+});
 
-module.exports = {
-  getItems,
-  addItem,
-  updateItem,
-  deleteItem
-};
+export default router;

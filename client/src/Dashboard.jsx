@@ -7,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase/firebase.js"; 
 import { onAuthStateChanged } from "firebase/auth"
 import { getItems, addItem, updateItem, deleteItem } from './api';
+import DashRight from './Dashboard/DashRight.jsx';
 
 
 
@@ -120,70 +121,8 @@ function Dashboard() {
         </div>
       </div>
       <div className='dash-right text-black bg-white w-full border-2 rounded-xl my-8'>
-          <div className='expense-content grid grid-cols-[8fr_4fr] h-full'>
-            <div className='left-exp '>
-                <DashLeft />
-            </div>
-            <div className='right-exp bg-gray-100 pt-14 px-8'>
-              <div className='font-bold text-center'>
-                Where your money go?
-              </div>
-              < SimpleGreenSlider />
-            </div>
-          </div>
-
-
-
-          <div className='bg-white mt-6 p-4 rounded shadow'>
-          <h2 className='text-xl font-bold mb-4'>💸 Manage Your Items</h2>
-          
-          <div className='flex gap-2 mb-4'>
-            <input 
-              type="text"
-              className='border px-3 py-1 rounded w-full'
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Enter item name"
-            />
-            <button 
-              onClick={handleSubmit}
-              className='bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700'
-            >
-              {editingItem ? 'Update' : 'Add'}
-            </button>
-          </div>
-
-          {items.length === 0 ? (
-            <p className="text-gray-500">No items found.</p>
-          ) : (
-            <ul className='space-y-2'>
-              {items.map(item => (
-                <li 
-                  key={item.id} 
-                  className='flex justify-between items-center bg-gray-200 px-3 py-2 rounded'
-                >
-                  <span>{item.name}</span>
-                  <div className="space-x-2">
-                    <button 
-                      onClick={() => handleEdit(item)} 
-                      className='text-blue-600 hover:underline'
-                    >
-                      Edit
-                    </button>
-                    <button 
-                      onClick={() => handleDelete(item.id)} 
-                      className='text-red-600 hover:underline'
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <DashRight />
       </div>
-
 
 
     </div>
