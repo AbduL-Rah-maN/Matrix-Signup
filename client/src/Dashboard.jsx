@@ -73,7 +73,7 @@ function Dashboard() {
         </div>
         <div className="w-3 h-3 text-bold flex justify-center">
           <Link to="/Login"> 
-            <button className='font-bold py-1 mt-8 px-2 text-gray-900'> Logout </button>
+            <button className='font-bold py-1 mt-8 px-2 text-gray-900 bg-white-500'> Logout </button>
           </Link>
         </div>
       </div>
